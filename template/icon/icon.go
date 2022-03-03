@@ -72,6 +72,7 @@ const (
 	ArrowsAlt                        = "fa-arrows-alt"                          // https://fontawesome.com/icons/arrows-alt
 	ArrowsH                          = "fa-arrows-h"                            // https://fontawesome.com/icons/arrows-h
 	ArrowsV                          = "fa-arrows-v"                            // https://fontawesome.com/icons/arrows-v
+	ArrowRotate                      = "fa-arrows-rotate"                       // https://fontawesome.com/icons/arrows-rotate
 	AslInterpreting                  = "fa-asl-interpreting"                    // https://fontawesome.com/icons/asl-interpreting
 	AssistiveListeningSystems        = "fa-assistive-listening-systems"         // https://fontawesome.com/icons/assistive-listening-systems
 	Asterisk                         = "fa-asterisk"                            // https://fontawesome.com/icons/asterisk

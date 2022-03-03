@@ -19,15 +19,14 @@ services:
 
 steps:  
 - name: api
-  image: chg80333/goadmin-test:v8
+  image: chg80333/goadmin-test:v7
   environment:
     GO111MODULE: on
     GOPROXY: https://goproxy.cn
   commands:
   - cd /go/src/github.com/GoAdminGroup/go-admin
   - git pull
-  - git fetch origin pull/$DRONE_PULL_REQUEST/head:pr$DRONE_PULL_REQUEST
-  - git checkout pr$DRONE_PULL_REQUEST
+  - git checkout $DRONE_COMMIT
   - sleep 80
   - make mysql-test
 
@@ -59,7 +58,7 @@ services:
 
 steps:
 - name: api
-  image: chg80333/goadmin-test:v8
+  image: chg80333/goadmin-test:v7
   volumes:
   - name: data
     path: /go/src/github.com/GoAdminGroup/go-admin/tests/data
@@ -69,8 +68,7 @@ steps:
   commands:
   - cd /go/src/github.com/GoAdminGroup/go-admin
   - git pull
-  - git fetch origin pull/$DRONE_PULL_REQUEST/head:pr$DRONE_PULL_REQUEST
-  - git checkout pr$DRONE_PULL_REQUEST
+  - git checkout $DRONE_COMMIT
   - sleep 80
   - make ms-test
 
@@ -96,15 +94,14 @@ services:
 
 steps:  
 - name: api
-  image: chg80333/goadmin-test:v8
+  image: chg80333/goadmin-test:v7
   environment:
     GO111MODULE: on
     GOPROXY: https://goproxy.cn
   commands:
   - cd /go/src/github.com/GoAdminGroup/go-admin
   - git pull
-  - git fetch origin pull/$DRONE_PULL_REQUEST/head:pr$DRONE_PULL_REQUEST
-  - git checkout pr$DRONE_PULL_REQUEST
+  - git checkout $DRONE_COMMIT
   - sleep 80
   - make pg-test
 
@@ -122,15 +119,14 @@ clone:
 
 steps:  
 - name: api
-  image: chg80333/goadmin-test:v8
+  image: chg80333/goadmin-test:v7
   environment:
     GO111MODULE: on
     GOPROXY: https://goproxy.cn
   commands:
   - cd /go/src/github.com/GoAdminGroup/go-admin
   - git pull
-  - git fetch origin pull/$DRONE_PULL_REQUEST/head:pr$DRONE_PULL_REQUEST
-  - git checkout pr$DRONE_PULL_REQUEST
+  - git checkout $DRONE_COMMIT
   - sleep 80
   - make sqlite-test
 
@@ -155,15 +151,14 @@ services:
 
 steps:
 - name: chrome
-  image: chg80333/goadmin-test:v8
+  image: chg80333/goadmin-test:v7
   environment:
     GO111MODULE: on
     GOPROXY: https://goproxy.cn
   commands:
   - cd /go/src/github.com/GoAdminGroup/go-admin
   - git pull
-  - git fetch origin pull/$DRONE_PULL_REQUEST/head:pr$DRONE_PULL_REQUEST
-  - git checkout pr$DRONE_PULL_REQUEST
+  - git checkout $DRONE_COMMIT
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
   - sleep 8
   - make web-test

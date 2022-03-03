@@ -805,8 +805,11 @@ func (tb *DefaultTable) UpdateData(dataList form.Values) error {
 	if len(dataList) == 0 {
 		return nil
 	}
-
-	_, err = tb.sql().Table(tb.Form.Table).
+	t := tb.Form.Table
+	if t == "" {
+		t = tb.Info.Table
+	}
+	_, err = tb.sql().Table(t).
 		Where(tb.PrimaryKey.Name, "=", dataList.Get(tb.PrimaryKey.Name)).
 		Update(tb.getInjectValueFromFormValue(dataList, types.PostTypeUpdate))
 
@@ -890,11 +893,15 @@ func (tb *DefaultTable) InsertData(dataList form.Values) error {
 }
 
 func (tb *DefaultTable) getInjectValueFromFormValue(dataList form.Values, typ types.PostType) dialect.H {
-
+	var t string = tb.Form.Table
+	if t == "" {
+		t = tb.Info.Table
+	}
+	
 	var (
 		value         = make(dialect.H)
 		exceptString  = make([]string, 0)
-		columns, auto = tb.getColumns(tb.Form.Table)
+		columns, auto = tb.getColumns(t)
 
 		fun types.PostFieldFilterFn
 	)

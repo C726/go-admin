@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"strings"
 	"github.com/GoAdminGroup/go-admin/context"
 	"github.com/GoAdminGroup/go-admin/modules/logger"
 	"github.com/GoAdminGroup/go-admin/plugins/admin/modules/guard"
@@ -21,8 +22,10 @@ func (h *Handler) Delete(ctx *context.Context) {
 	//}
 
 	if err := h.table(param.Prefix, ctx).DeleteData(param.Id); err != nil {
-		logger.Error(err)
-		response.Error(ctx, "delete fail")
+		if strings.Index(err.Error(), "no affect row") < 0 {
+			logger.Error(err)
+			response.Error(ctx, "delete fail")
+		}
 		return
 	}
 

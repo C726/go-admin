@@ -5,15 +5,10 @@ var projectTemplate = map[string]string{
 package main
 
 import (
-	"context"
-	"errors"
 	"io/ioutil"
 	"log"
-	"net/http"
 	"os"
 	"os/signal"
-	"syscall"
-	"time"
 
 	_ "github.com/GoAdminGroup/go-admin/adapter/gin"                    // web framework adapter
 	_ "github.com/GoAdminGroup/go-admin/modules/db/drivers/{{.DriverModule}}" // sql driver
@@ -58,32 +53,13 @@ func startServer() {
 
 	{{if ne .Orm ""}}models.Init(eng.{{title .Driver}}Connection()){{end}}
 
-	srv := &http.Server{
-		Addr:    ":{{.Port}}",
-		Handler: r,
-	}
-
-	go func() {
-		if err := srv.ListenAndServe(); err != nil && errors.Is(err, http.ErrServerClosed) {
-			log.Printf("listen: %s\n", err)
-		}
-	}()
+	_ = r.Run(":{{.Port}}")
 
 	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	signal.Notify(quit, os.Interrupt)
 	<-quit
-	log.Println("Shutting down server...")
-
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	if err := srv.Shutdown(ctx); err != nil {
-		log.Fatal("Server forced to shutdown:", err)
-	}
 	log.Print("closing database connection")
 	eng.{{title .Driver}}Connection().Close()
-
-	log.Println("Server exiting")
 }
 {{end}}`,
 

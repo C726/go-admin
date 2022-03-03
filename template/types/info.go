@@ -147,13 +147,12 @@ type Field struct {
 
 	Joins Joins
 
-	Width       int
-	Sortable    bool
-	EditAble    bool
-	Fixed       bool
-	Filterable  bool
-	Hide        bool
-	HideForList bool
+	Width      int
+	Sortable   bool
+	EditAble   bool
+	Fixed      bool
+	Filterable bool
+	Hide       bool
 
 	EditType    table.Type
 	EditOptions FieldOptions
@@ -345,9 +344,6 @@ func (f FieldList) GetTheadAndFilterForm(info TableInfo, params parameter.Parame
 		if field.Hide {
 			continue
 		}
-		if field.HideForList {
-			continue
-		}
 		thead = append(thead, TheadItem{
 			Head:       field.Head,
 			Sortable:   field.Sortable,
@@ -459,10 +455,10 @@ func (f FieldList) GetFieldByFieldName(name string) Field {
 // ... left join roles on roles.id = users.role_id ...
 //
 type Join struct {
-	Table      string
-	TableAlias string
-	Field      string
-	JoinField  string
+	Table      string   //连接目标表
+	TableAlias string   //连接目标表别名
+	Field      string   //当前表字段
+	JoinField  string   //连接目标表字段
 	BaseTable  string
 }
 
@@ -1398,11 +1394,6 @@ func (i *InfoPanel) FieldFilterOnChooseDisable(value string, field ...string) *I
 
 func (i *InfoPanel) FieldHide() *InfoPanel {
 	i.FieldList[i.curFieldListIndex].Hide = true
-	return i
-}
-
-func (i *InfoPanel) FieldHideForList() *InfoPanel {
-	i.FieldList[i.curFieldListIndex].HideForList = true
 	return i
 }
 

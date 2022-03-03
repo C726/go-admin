@@ -250,6 +250,9 @@ type Config struct {
 	// The application unique ID. Once generated, don't modify.
 	AppID string `json:"app_id,omitempty" yaml:"app_id,omitempty" ini:"app_id,omitempty"`
 
+	// The application listen on port.
+	ListenAddr string `json:"listen_addr,omitempty" yaml:"listen_addr,omitempty" ini:"listen_addr,omitempty"`
+
 	// The cookie domain used in the auth modules. see
 	// the session.go.
 	Domain string `json:"domain,omitempty" yaml:"domain,omitempty" ini:"domain,omitempty"`
@@ -395,8 +398,32 @@ type Config struct {
 
 	URLFormat URLFormat `json:"url_format,omitempty" yaml:"url_format,omitempty" ini:"url_format,omitempty"`
 
+	FrontTheme string `json:"frontend_theme,omitempty" yaml:"frontend_theme,omitempty" ini:"frontend_theme,omitempty"`
+
+	Site Site `json:"site,omitempty" yaml:"site,omitempty" ini:"site,omitempty"`
+	
+	Discord Discord `json:"discord,omitempty" yaml:"discord,omitempty" ini:"discord,omitempty"`
+
 	prefix string       `json:"-" yaml:"-" ini:"-"`
 	lock   sync.RWMutex `json:"-" yaml:"-" ini:"-"`
+}
+
+type Site struct {
+	Theme string `json:"theme,omitempty" yaml:"theme,omitempty" ini:"theme,omitempty"`
+	DashboardTheme string `json:"dashboard_theme,omitempty" yaml:"dashboard_theme,omitempty" ini:"dashboard_theme,omitempty"`
+}
+
+type Discord struct {
+	ClientId string `json:"client_id,omitempty" yaml:"client_id,omitempty" ini:"client_id,omitempty"`
+	ClientSecret string `json:"client_secret,omitempty" yaml:"client_secret,omitempty" ini:"client_secret,omitempty"`
+	BaseUrl string `json:"base_url,omitempty" yaml:"base_url,omitempty" ini:"base_url,omitempty"`
+	RedirectUri string `json:"redirect_uri,omitempty" yaml:"redirect_uri,omitempty" ini:"redirect_uri,omitempty"`
+	BotToken string `json:"bot_token,omitempty" yaml:"bot_token,omitempty" ini:"bot_token,omitempty"`
+	GuildId string `json:"guild_id,omitempty" yaml:"guild_id,omitempty" ini:"guild_id,omitempty"`
+	ImageBaseUrl string `json:"image_base_url,omitempty" yaml:"image_base_url,omitempty" ini:"image_base_url,omitempty"`
+	ImageDefaultUrl string `json:"image_default_url,omitempty" yaml:"image_default_url,omitempty" ini:"image_default_url,omitempty"`
+	CallBackUrl string `json:"callback_url,omitempty" yaml:"callback_url,omitempty" ini:"callback_url,omitempty"`
+	Scope string `json:"scope,omitempty" yaml:"scope,omitempty" ini:"scope,omitempty"`
 }
 
 type Logger struct {

@@ -194,6 +194,17 @@ func (sql *SQL) Where(field string, operation string, arg interface{}) *SQL {
 	return sql
 }
 
+// WhereEquals add the where opreation of "=" and argument values.
+func (sql *SQL) WhereEquals(field string, arg interface{}) *SQL {
+	sql.Wheres = append(sql.Wheres, dialect.Where{
+		Field: field,
+		Operation: "=",
+		Qmark: "?",
+	})
+	sql.Args = append(sql.Args, arg)
+	return sql
+}
+
 // WhereIn add the where operation of "in" and argument values.
 func (sql *SQL) WhereIn(field string, arg []interface{}) *SQL {
 	if len(arg) == 0 {
